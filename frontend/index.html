@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Event</title>
+<meta name="description" content="Event details, schedule and RSVP.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="page-loader" id="loader" aria-label="Loading"><span class="spin"></span></div>
+
+<header class="nav">
+  <div class="wrap">
+    <a href="#home" class="brand" id="brand">Event</a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="navList"><i class="fa-solid fa-bars"></i></button>
+    <ul id="navList">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#schedule">Schedule</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#venue">Venue</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#rsvp" class="cta">RSVP</a></li>
+    </ul>
+  </div>
+</header>
+
+<main>
+<section id="home" class="hero" aria-label="Home">
+  <div class="wrap">
+    <p class="hero-when pending" id="heroWhen"></p>
+    <h1 class="pending" id="heroTitle">Loading</h1>
+    <p class="hero-tag" id="heroTag"></p>
+    <div id="countdownBox"></div>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#rsvp"><i class="fa-solid fa-envelope-circle-check"></i> RSVP now</a>
+      <a class="btn btn-ghost" id="gcalBtn" target="_blank" rel="noopener"><i class="fa-regular fa-calendar-plus"></i> Add to Google Calendar</a>
+    </div>
+    <p class="hero-venue"><i class="fa-solid fa-location-dot"></i> <span id="heroVenue"></span></p>
+  </div>
+</section>
+<div id="notices"></div>
+
+<section id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div>
+        <h2>About the event</h2>
+        <div class="lead" id="introText"></div>
+        <div id="descText"></div>
+      </div>
+      <div>
+        <h3>Why we are doing this</h3>
+        <div id="purposeText"></div>
+        <h3>What we want to achieve</h3>
+        <ul class="objectives" id="objectives"></ul>
+        <h3>Organizers</h3>
+        <div id="organizerText"></div>
+      </div>
+    </div>
+    <h2 style="margin-top:64px" id="peopleHead">Speakers and organizers</h2>
+    <div class="people" id="people"></div>
+  </div>
+</section>
+
+<section id="schedule" class="alt">
+  <div class="wrap">
+    <h2>Schedule</h2>
+    <p class="lead">Pick a date on the calendar to see what is happening. Highlighted sessions are marked.</p>
+    <div class="sched-grid">
+      <div class="cal" aria-label="Event calendar">
+        <div class="cal-head">
+          <button id="calPrev" aria-label="Previous month"><i class="fa-solid fa-chevron-left"></i></button>
+          <strong id="calTitle"></strong>
+          <button id="calNext" aria-label="Next month"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+        <div class="cal-grid" id="calGrid"></div>
+        <div class="cal-foot"><a class="btn btn-dark" id="gcalBtn2" target="_blank" rel="noopener"><i class="fa-regular fa-calendar-plus"></i> Add to Google Calendar</a></div>
+      </div>
+      <div aria-live="polite">
+        <div class="day-title" id="dayTitle"></div>
+        <ol class="timeline" id="timeline"></ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="wrap">
+    <h2>Gallery and videos</h2>
+    <div id="promo"></div>
+    <div class="gallery" id="gal"></div>
+    <div class="videos" id="vids"></div>
+    <p class="empty" id="galEmpty" hidden>Photos and videos will appear here once the organizers add them.</p>
+  </div>
+</section>
+
+<section id="live" class="live">
+  <div class="wrap">
+    <h2>Live streaming</h2>
+    <p class="lead" id="liveNote"></p>
+    <div class="live-box" id="liveBox"></div>
+  </div>
+</section>
+
+<section id="venue">
+  <div class="wrap">
+    <h2>Venue and location</h2>
+    <div class="venue-grid">
+      <div>
+        <h3 id="venueName"></h3>
+        <p id="venueAddr"></p>
+        <dl class="facts" id="venueFacts"></dl>
+        <p><a class="btn btn-line" id="dirBtn" target="_blank" rel="noopener"><i class="fa-solid fa-diamond-turn-right"></i> Get directions</a></p>
+        <img class="venue-img" id="venueImg" alt="The event venue" hidden>
+      </div>
+      <iframe class="map" id="map" title="Map of the venue" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
+
+<section id="rsvp" class="alt">
+  <div class="wrap">
+    <div class="rsvp-grid">
+      <div>
+        <h2>RSVP</h2>
+        <p class="lead">Tell us if you are coming. You will get a confirmation email with a reference number and a link to change or cancel your RSVP.</p>
+        <p class="seats" id="seats"></p>
+        <p>Already registered? <a href="/manage">Update or cancel your RSVP</a>.</p>
+      </div>
+      <div>
+        <div class="panel" id="rsvpPanel">
+          <form id="rsvpForm" novalidate>
+            <div class="form-grid">
+              <div class="field full"><label for="full_name">Full name <span class="req">*</span></label><input id="full_name" name="full_name" autocomplete="name" maxlength="120" required></div>
+              <div class="field"><label for="email">Email address <span class="req">*</span></label><input id="email" name="email" type="email" autocomplete="email" maxlength="190" required></div>
+              <div class="field"><label for="phone">Contact number <span class="req">*</span></label><input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="25" required></div>
+              <div class="field full"><label for="organization">Organization or school</label><input id="organization" name="organization" autocomplete="organization" maxlength="160"></div>
+              <div class="field"><label for="status">Will you attend? <span class="req">*</span></label>
+                <select id="status" name="status" required><option value="attending">Attending</option><option value="maybe">Maybe</option><option value="not_attending">Not attending</option></select></div>
+              <div class="field"><label for="guests">Number of attendees <span class="req">*</span></label><input id="guests" name="guests" type="number" min="1" max="10" value="1" required>
+                <p class="hint">Include yourself. Up to 10.</p></div>
+              <div class="field full"><label for="message">Special requests or message</label><textarea id="message" name="message" maxlength="1000"></textarea></div>
+              <div class="field full"><button class="btn btn-dark" type="submit" id="rsvpSubmit"><i class="fa-solid fa-paper-plane"></i> Send my RSVP</button></div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <h2>Contact and FAQ</h2>
+    <div class="contact-grid">
+      <div>
+        <h3>Questions? Send us a message</h3>
+        <ul class="contact-list" id="contactList"></ul>
+        <form id="contactForm" novalidate>
+          <div class="form-grid">
+            <div class="field"><label for="c_name">Your name <span class="req">*</span></label><input id="c_name" name="name" maxlength="120" required></div>
+            <div class="field"><label for="c_email">Email <span class="req">*</span></label><input id="c_email" name="email" type="email" maxlength="190" required></div>
+            <div class="field full"><label for="c_subject">Subject</label><input id="c_subject" name="subject" maxlength="200"></div>
+            <div class="field full"><label for="c_message">Message <span class="req">*</span></label><textarea id="c_message" name="message" maxlength="3000" required></textarea></div>
+            <div class="field full"><button class="btn btn-dark" type="submit"><i class="fa-regular fa-paper-plane"></i> Send message</button></div>
+          </div>
+        </form>
+      </div>
+      <div>
+        <h3>Frequently asked questions</h3>
+        <details><summary>Is the event free?</summary><p>Registration is for planning only. Check the schedule and announcements for any fees or updates.</p></details>
+        <details><summary>Can I bring a guest?</summary><p>Yes. Enter the total number of people, including yourself, in the RSVP form.</p></details>
+        <details><summary>How do I change or cancel my RSVP?</summary><p>Use the link in your confirmation email, or go to the <a href="/manage">manage page</a> and enter your reference number and email.</p></details>
+        <details><summary>I did not get a confirmation email.</summary><p>Check your spam folder. If it is not there, contact the organizers with the email you used to register.</p></details>
+        <details><summary>Will the event be streamed?</summary><p>See the live streaming section. The link is posted there before the event starts.</p></details>
+        <details><summary>What should I bring?</summary><p>Bring a valid ID and your reference number. See the venue section for details.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div><h3 id="footTitle"></h3><p id="footWhen"></p><div class="social" id="social"></div></div>
+      <div><h3>Explore</h3><ul><li><a href="#about">About</a></li><li><a href="#schedule">Schedule</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#venue">Venue</a></li><li><a href="#rsvp">RSVP</a></li></ul></div>
+      <div><h3>Share this event</h3>
+        <div class="social">
+          <a id="shFb" target="_blank" rel="noopener" aria-label="Share on Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a id="shX" target="_blank" rel="noopener" aria-label="Share on X"><i class="fa-brands fa-x-twitter"></i></a>
+          <a id="shLi" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <button id="shIg" aria-label="Copy link to share on Instagram"><i class="fa-brands fa-instagram"></i></button>
+          <button id="shCopy" aria-label="Copy link"><i class="fa-solid fa-link"></i></button>
+        </div>
+        <p class="hint" style="color:#9fc0c0">Instagram has no share link, so we copy the page link for you to paste.</p>
+      </div>
+    </div>
+    <div class="copy">&copy; <span id="year"></span> <span id="copyName"></span>. <a href="/admin">Admin</a></div>
+  </div>
+</footer>
+
+<dialog class="lightbox" id="lightbox"><button id="lbClose" aria-label="Close image"><i class="fa-solid fa-xmark"></i></button><img alt=""><p></p></dialog>
+<script src="/js/common.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>

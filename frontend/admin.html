@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Admin dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin">
+<div id="loginView" hidden>
+  <form class="login" id="loginForm" novalidate>
+    <h1>Admin sign in</h1>
+    <div class="field" style="margin-bottom:14px"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="username" required></div>
+    <div class="field" style="margin-bottom:18px"><label for="password">Password</label><input id="password" name="password" type="password" autocomplete="current-password" required></div>
+    <button class="btn btn-dark" type="submit" style="width:100%;justify-content:center">Sign in</button>
+    <p class="hint" style="margin-top:14px"><a href="/">Back to the event site</a></p>
+  </form>
+</div>
+
+<div id="appView" hidden>
+  <div class="bar"><div class="wrap"><strong>Event admin</strong>
+    <span><span id="who" style="margin-right:12px"></span><button class="btn btn-ghost" id="logout" style="padding:.4em 1em">Sign out</button></span></div></div>
+  <nav class="tabs" aria-label="Admin sections"><div class="wrap" role="tablist" id="tabs"></div></nav>
+  <main class="a" id="main"></main>
+</div>
+<dialog class="modal" id="dlg"><form method="dialog" id="dlgForm" novalidate></form></dialog>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.3/chart.umd.min.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/admin.js"></script>
+</body>
+</html>

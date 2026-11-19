@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Manage your RSVP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="nav"><div class="wrap"><a class="brand" href="/">&larr; Back to the event</a></div></header>
+<main>
+<section style="min-height:80vh"><div class="wrap" style="max-width:720px">
+  <h2>Manage your RSVP</h2>
+  <div id="lookupBox" class="panel">
+    <p>Enter the reference number and email from your confirmation. If you opened this page from the email link, your RSVP loads automatically.</p>
+    <form id="lookupForm" novalidate><div class="form-grid">
+      <div class="field"><label for="reference">Reference number</label><input id="reference" name="reference" placeholder="RSVP-XXXXXXXXXX" autocomplete="off" required></div>
+      <div class="field"><label for="l_email">Email address</label><input id="l_email" name="email" type="email" autocomplete="email" required></div>
+      <div class="field full"><button class="btn btn-dark" type="submit">Find my RSVP</button></div>
+    </div></form>
+  </div>
+  <div id="editBox" class="panel" hidden>
+    <p>Reference: <span class="ref" id="refShown" style="font-size:1.2rem;margin:0 0 0 .3em"></span></p>
+    <p id="emailShown" class="hint"></p>
+    <form id="editForm" novalidate><div class="form-grid">
+      <div class="field full"><label for="full_name">Full name</label><input id="full_name" name="full_name" maxlength="120" required></div>
+      <div class="field"><label for="phone">Contact number</label><input id="phone" name="phone" type="tel" maxlength="25" required></div>
+      <div class="field"><label for="organization">Organization or school</label><input id="organization" name="organization" maxlength="160"></div>
+      <div class="field"><label for="status">Attendance</label><select id="status" name="status"><option value="attending">Attending</option><option value="maybe">Maybe</option><option value="not_attending">Not attending</option></select></div>
+      <div class="field"><label for="guests">Number of attendees</label><input id="guests" name="guests" type="number" min="1" max="10" value="1"></div>
+      <div class="field full"><label for="message">Special requests or message</label><textarea id="message" name="message" maxlength="1000"></textarea></div>
+      <div class="field full" style="flex-direction:row;gap:12px;flex-wrap:wrap">
+        <button class="btn btn-dark" type="submit" id="saveBtn">Save changes</button>
+        <button class="btn btn-danger" type="button" id="cancelBtn">Cancel my RSVP</button>
+      </div>
+    </div></form>
+    <p id="cancelledNote" class="closed" hidden>This RSVP is cancelled. Choose a new attendance status and save to restore it.</p>
+  </div>
+</div></section>
+</main>
+<script src="/js/common.js"></script>
+<script src="/js/manage.js"></script>
+</body>
+</html>
