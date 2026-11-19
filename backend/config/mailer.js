@@ -1,21 +1,29 @@
-const nodemailer = require('nodemailer');
-
-let transporter;
-const enabled = () => Boolean(process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS);
+// Sends email through the Mailjet HTTPS API (works on hosts that block SMTP ports).
+// SMTP_USER = Mailjet API Key, SMTP_PASS = Mailjet Secret Key.
+const enabled = () => Boolean(process.env.SMTP_USER && process.env.SMTP_PASS);
 
 async function send({ to, subject, html, text }) {
   if (!enabled()) {
-    console.warn(`[mail] SMTP not configured, skipped: "${subject}" -> ${to}`);
+    console.warn(`[mail] not configured, skipped: "${subject}" -> ${to}`);
     return false;
   }
+  const m = /^\s*(?:"?([^"<]*)"?\s*)?<([^>]+)>\s*$/.exec(process.env.MAIL_FROM || '');
+  const from = m
+    ? { Email: m[2].trim(), Name: (m[1] || '').trim() }
+    : { Email: (process.env.MAIL_FROM || '').trim() };
   try {
-    transporter ||= nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: +process.env.SMTP_PORT || 587,
-      secure: process.env.SMTP_SECURE === 'true',
-      auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
+    const res = await fetch('https://api.mailjet.com/v3.1/send', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Basic ' + Buffer.from(`${process.env.SMTP_USER}:${process.env.SMTP_PASS}`).toString('base64'),
+      },
+      body: JSON.stringify({ Messages: [{ From: from, To: [{ Email: to }], Subject: subject, TextPart: text, HTMLPart: html }] }),
     });
-    await transporter.sendMail({ from: process.env.MAIL_FROM || process.env.SMTP_USER, to, subject, html, text });
+    if (!res.ok) {
+      console.error('[mail] failed:', res.status, await res.text());
+      return false;
+    }
     return true;
   } catch (err) {
     console.error('[mail] failed:', err.message);
