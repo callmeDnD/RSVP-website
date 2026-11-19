@@ -30,7 +30,7 @@ const COPY = {
 
 function build(kind, ev, r) {
   const c = COPY[kind];
-  const base = (process.env.APP_URL || '').replace(/\/$/, '');
+  const base = (process.env.APP_URL || '').replace(/\/$/, '' || process.env.BASE_URL || '').replace(/\/$/, '');
   const link = `${base}/manage?token=${encodeURIComponent(r.token)}`;
   const date = wall(ev.start_at, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
   const time = `${wall(ev.start_at, { hour: 'numeric', minute: '2-digit' })} to ${wall(ev.end_at, { hour: 'numeric', minute: '2-digit' })}`;
