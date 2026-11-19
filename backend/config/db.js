@@ -10,4 +10,7 @@ module.exports = mysql.createPool({
   connectionLimit: 10,
   charset: 'utf8mb4',
   dateStrings: true, // DATE/DATETIME come back as plain strings, no timezone shifting
+  ssl: process.env.DB_SSL === 'true'
+    ? { minVersion: 'TLSv1.2', rejectUnauthorized: true }
+    : undefined,
 });
